@@ -31,7 +31,7 @@ gem install sinatra
 
 ## ▶️ Run the API
 
-Create a file named `app.rb` with the following content:
+Create a file named `main.rb` with the following content:
 
 ```ruby
 require 'sinatra'
