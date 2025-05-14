@@ -1,85 +1,80 @@
-# Sinatra Hello World API 🌍❤️
+# Hello API
 
-A super simple Ruby Sinatra API that returns a plain text string.
+Простое REST API на Ruby с использованием фреймворка Roda.
 
----
+## Структура проекта
 
-## ▶️ Getting Started
+Проект следует принципам SOLID и использует объектно-ориентированный подход:
 
-### 🔧 Prerequisites
+```
+.
+├── app/
+│   ├── constants/     # Константы и конфигурации
+│   ├── models/        # Модели данных
+│   └── services/      # Сервисные классы
+├── spec/             # Тесты
+├── app.rb           # Основной файл приложения
+├── config.ru        # Конфигурация Rack
+└── Gemfile          # Зависимости проекта
+```
 
-- Ruby (>= 2.5)
-- Bundler (optional, but recommended)
+## Принципы SOLID
 
-### 📦 Install dependencies
+1. **Single Responsibility Principle (SRP)**
+   - `Message` отвечает только за представление сообщения
+   - `MessageService` отвечает за бизнес-логику работы с сообщениями
+   - `Translations` отвечает только за хранение переводов
 
-If using Bundler:
+2. **Open/Closed Principle (OCP)**
+   - Легко добавлять новые переводы без изменения существующего кода
+   - Можно расширять функциональность через новые сервисы
+
+3. **Liskov Substitution Principle (LSP)**
+   - Все сообщения могут быть использованы взаимозаменяемо
+
+4. **Interface Segregation Principle (ISP)**
+   - Интерфейсы разделены на минимальные необходимые части
+
+5. **Dependency Inversion Principle (DIP)**
+   - Высокоуровневые модули не зависят от низкоуровневых деталей
+
+## Установка
 
 ```bash
-bundle init
-echo 'gem "sinatra"' >> Gemfile
 bundle install
 ```
 
-Or just install Sinatra directly:
+## Запуск
 
 ```bash
-gem install sinatra
+bundle exec rackup
 ```
 
----
-
-## ▶️ Run the API
-
-Create a file named `main.rb` with the following content:
-
-```ruby
-require 'sinatra'
-
-get '/str' do
-  "hello world from ruby with love"
-end
-```
-
-Then run:
+## Тесты
 
 ```bash
-ruby main.rb
+bundle exec rspec
 ```
 
-By default, the server runs at: [http://localhost:4567](http://localhost:4567)
+## API Endpoints
 
----
+- `GET /` - Приветственное сообщение
+- `GET /health` - Проверка здоровья API
+- `GET /api/messages` - Получить сообщение по умолчанию
+- `GET /api/messages/:language` - Получить переведенное сообщение
+- `POST /api/messages` - Создать новое сообщение
 
-## 📘 API Reference
-
-### GET `/str`
-
-- **Returns:** Plain text greeting
-- **Content-Type:** `text/html` (default)
-- **Response Body:**
-
-```
-hello world from ruby with love
-```
-
----
-
-## 🧪 Example (with curl)
+### Примеры запросов
 
 ```bash
-curl http://localhost:4567
+# Получить сообщение по умолчанию
+curl http://localhost:9292/api/messages
+
+# Получить сообщение на испанском
+curl http://localhost:9292/api/messages/es
+
+# Создать новое сообщение
+curl -X POST http://localhost:9292/api/messages \
+  -H "Content-Type: application/json" \
+  -d '{"content":"test message","language":"en"}'
 ```
-
----
-
-## 🧰 Tech Stack
-
-- Ruby
-- Sinatra
-
----
-
-## 📄 License
-
-MIT — free to use, modify, and share.
